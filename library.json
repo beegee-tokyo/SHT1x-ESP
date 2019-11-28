@@ -1,0 +1,21 @@
+{
+    "name": "SHT1x-ESP",
+    "keywords": "sensor, humidity, temperature, sht10, sht11, sht15, sht1x",
+    "description": "Based on the SHT1x from Vincent Pang, updated to work with ESP32. Provides a simple interface to the SHT1x series (SHT10, SHT11, SHT15) and SHT7x series (SHT71, SHT75) temperature / humidity sensors from Sensirion",
+    "repository":
+    {
+        "type": "git",
+        "url": "https://github.com/Vincent-Pang/SHT1x.git"
+    },
+    "frameworks": "arduino",
+	"platforms": [
+		"espressif8266",
+		"espressif32"
+	],
+    "authors":
+    {
+        "name": "Bernd Giesecke",
+        "email": "beegee@giesecke.tk"
+    },
+    "version": "1.0.0"
+}

@@ -1,0 +1,10 @@
+.DS_Store
+cmake-build-debug/
+CMakeLists.txt
+.pioenvs
+.piolibdeps
+CMakeListsPrivate.txt
+.travis.yml
+platformio.ini
+src/
+lib/
