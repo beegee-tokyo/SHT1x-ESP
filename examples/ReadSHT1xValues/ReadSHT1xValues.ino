@@ -10,7 +10,7 @@
 
 #include <Arduino.h>
 
-#include <SHT1x.h>
+#include <SHT1x-ESP.h>
 
 // Specify data and clock connections and instantiate SHT1x object
 #define dataPin  10
