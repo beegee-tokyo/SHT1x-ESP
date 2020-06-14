@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/beegee-tokyo/SHT1x-ESP.svg?branch=master)](https://travis-ci.com/beegee-tokyo/SHT1x-ESP)
 # SHT1x Temperature / Humidity Sensor Library for Arduino
 Copyright 2019 Bernd Giesecke beegee@giesecke.tk / https://www.desire.giesecke.tk    
 Copyright 2017 Vincent Pang wingshun.pang@gmail.com  
