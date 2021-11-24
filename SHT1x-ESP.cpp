@@ -133,17 +133,17 @@ uint16_t SHT1x::readRawData(ShtCommand command, uint8_t dataPin, uint8_t clockPi
 bool SHT1x::sendCommandSHT(ShtCommand command, uint8_t dataPin, uint8_t clockPin) const
 {
 	// Transmission Start
-	pinMode(dataPin, OUTPUT);
+	//pinMode(dataPin, OUTPUT);
 	pinMode(clockPin, OUTPUT);
-	digitalWrite(dataPin, HIGH);
+	controlDataPin(dataPin, HIGH);
 	delayMicroseconds(1);
 	digitalWrite(clockPin, HIGH);
-	digitalWrite(dataPin, LOW);
+	controlDataPin(dataPin, LOW);
 	delayMicroseconds(1);
 	digitalWrite(clockPin, LOW);
 	delayMicroseconds(1);
 	digitalWrite(clockPin, HIGH);
-	digitalWrite(dataPin, HIGH);
+	controlDataPin(dataPin, HIGH);
 	delayMicroseconds(1);
 	digitalWrite(clockPin, LOW);
 	delayMicroseconds(1);
@@ -151,7 +151,7 @@ bool SHT1x::sendCommandSHT(ShtCommand command, uint8_t dataPin, uint8_t clockPin
 	// The command (3 msb are address and must be 000, and last 5 bits are command)
 	for (uint8_t i = 0; i < 8; i++)
 	{
-		digitalWrite(dataPin, !!(static_cast<uint8_t>(command) & (1 << (7 - i))));
+		controlDataPin(dataPin, !!(static_cast<uint8_t>(command) & (1 << (7 - i))));
 		digitalWrite(clockPin, HIGH);
 		delayMicroseconds(1);
 		digitalWrite(clockPin, LOW);
@@ -236,7 +236,7 @@ uint16_t SHT1x::getData16SHT(uint8_t dataPin, uint8_t clockPin) const
 	}
 	// Send the required ack
 	pinMode(dataPin, OUTPUT);
-	digitalWrite(dataPin, LOW);
+	controlDataPin(dataPin, LOW);
 
 	pinMode(clockPin, OUTPUT);
 	digitalWrite(clockPin, HIGH);
@@ -269,10 +269,10 @@ uint16_t SHT1x::getData16SHT(uint8_t dataPin, uint8_t clockPin) const
 void SHT1x::skipCrcSHT(uint8_t dataPin, uint8_t clockPin) const
 {
 	// Skip acknowledge to end trans (no CRC)
-	pinMode(dataPin, OUTPUT);
+	//pinMode(dataPin, OUTPUT);
 	pinMode(clockPin, OUTPUT);
 
-	digitalWrite(dataPin, HIGH);
+	controlDataPin (dataPin, HIGH);
 	digitalWrite(clockPin, HIGH);
 	digitalWrite(clockPin, LOW);
 }
@@ -390,4 +390,16 @@ double SHT1x::getD2ForF(SHT1x::TemperatureMeasurementResolution resolution) cons
 	};
 
 	return VALUES[static_cast<uint8_t>(resolution)];
+}
+
+// We should never drive the output pin high to avoid contention of the shared line between controller and sensor
+// See datasheet!
+void SHT1x::controlDataPin(uint8_t dataPin, uint8_t val) const {
+  if (val) {
+    // Release the datapin
+    pinMode(dataPin, INPUT_PULLUP);
+  } else {
+    digitalWrite(dataPin, LOW);
+    pinMode(dataPin, OUTPUT);
+  }
 }

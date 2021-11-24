@@ -82,6 +82,8 @@ class SHT1x
     double getD2ForC(TemperatureMeasurementResolution resolution) const;
     double getD2ForF(TemperatureMeasurementResolution resolution) const;
 
+    void   controlDataPin(uint8_t dataPin, uint8_t val) const;
+    
     const uint8_t _dataPin;
     const uint8_t _clockPin;
 
